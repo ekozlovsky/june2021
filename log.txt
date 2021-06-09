@@ -1,0 +1,17 @@
+commit 80c4a90d94b4b5bdfb1ff485c4eac350bba7fb45
+Author: Yauhen Kazlouski <ekozlovsky@yandex.ru>
+Date:   Wed Jun 9 13:21:55 2021 +0300
+
+    add task1
+
+commit 741b5b3630d524be8491b6b234a47249e24c63ff
+Author: Yauhen Kazlouski <ekozlovsky@yandex.ru>
+Date:   Wed Jun 9 13:15:41 2021 +0300
+
+    add .gitignore
+
+commit c9f26f16250f2479125bc839fdcff62d8b4d3935
+Author: ekozlovsky <61785522+ekozlovsky@users.noreply.github.com>
+Date:   Wed Jun 9 10:03:07 2021 +0300
+
+    Initial commit
