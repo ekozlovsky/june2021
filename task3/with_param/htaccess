@@ -1,0 +1,14 @@
+
+
+
+
+
+
+AddType text/html .shtml
+AddOutputFilter INCLUDES .shtml
+AddHandler server-parsed .shtml
+#XBitHack on 
+
+Options +Includes
+AddType text/html shtml
+AddHandler server-parsed shtml
