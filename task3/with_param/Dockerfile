@@ -19,7 +19,7 @@ COPY httpd.conf /etc/apache2/httpd.conf
 #RUN echo "XBitHack on" >> /var/www/localhost/htdocs/.htaccess
 
 
-CMD chmod +x /var/www/localhost/htdocs/index.shtml
+#CMD chmod +x /var/www/localhost/htdocs/index.shtml
 EXPOSE 80
 CMD ["/usr/sbin/httpd", "-f", "/etc/apache2/httpd.conf", "-DFOREGROUND"]
 
