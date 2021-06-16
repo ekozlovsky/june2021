@@ -5,7 +5,24 @@ services:
     ports:
       - "80:80"
   java:
+    depends_on:
+      - db
     image: spring_demo
     ports:
       - "8088:8080"
-
+    volumes:
+      - wordpress_data:/var/www/html
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      
+volumes:
+  db_data: {}
+  wordpress_data: {}
