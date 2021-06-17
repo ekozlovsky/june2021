@@ -23,7 +23,7 @@ jobs:
 
     
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag with_devops:$(date +%s)
+      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USER }}/with_devops:$(date +%s)
 
     - name: docker push
       run: |
