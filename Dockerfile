@@ -6,4 +6,4 @@ RUN echo "<html><body><h1>It PassEnv ${DEVOPS}</h1></body></html>" > /var/www/lo
 #COPY httpd.conf /etc/apache2/httpd.conf
 EXPOSE 80
 CMD ["/usr/sbin/httpd", "-f", "/etc/apache2/httpd.conf", "-DFOREGROUND"]
-#checking
+#checking checking
