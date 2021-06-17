@@ -23,8 +23,8 @@ jobs:
 
     
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USER }}/with_devops:$(date +%s)
+      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USER }}/with_devops:1.0.0
 
     - name: docker push
       run: |
-        docker push ${{ secrets.DOCKER_USER }}/with_devops:$(date +%s)
+        docker push ${{ secrets.DOCKER_USER }}/with_devops:1.0.0
