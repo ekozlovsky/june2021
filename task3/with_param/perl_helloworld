@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo $DEVOPS
+echo "<h1>It PassEnv ${DEVOPS}</h1> " >> /var/www/localhost/htdocs/index.shtml
 #!/usr/bin/perl
 #use strict;
 #use warnings;
