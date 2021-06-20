@@ -1,0 +1,39 @@
+---
+- name: Install docker
+  gather_facts: No
+  hosts: clients
+
+  tasks:
+
+    - name: InstallDocker
+      shell: sudo amazon-linux-extras install -y docker
+
+    - name: ec2userDockerGroup
+      shell: sudo usermod -a -G docker ec2-user
+
+    - name: Enable docker and start
+      ansible.builtin.systemd:
+        name: docker.service
+        state: started
+        enabled: yes
+      become: yes
+
+
+          #    - name: Upgrade all packages
+          #      yum: name=* state=latest      
+      #    - name: Add repository
+      #      yum_repository:
+      #        name: epel
+      #        description: EPEL YUM repo
+      #        :q
+      #    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+      
+      
+
+          #    - name: yum utils
+          #      shell: sudo yum install -y yum-utils 
+
+          #    - name: 
+          #      shell: sudo yum-config-manager  --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+          #    - name: install
+          #      shell: sudo yum install docker-ce docker-ce-cli containerd.io

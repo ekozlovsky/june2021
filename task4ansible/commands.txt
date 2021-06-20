@@ -1,0 +1,16 @@
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+
+python3 get-pip.py --user
+
+
+
+python3 -m pip install --user ansible
+
+
+sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+sudo yum-config-manager --enable epel
+
+
+
+ansible clients  -m ping
+ansible-playbook -i inventory -vvv -u ec2-user install-docker.yml

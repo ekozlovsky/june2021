@@ -1,0 +1,43 @@
+---
+- name: Install docker
+  gather_facts: No
+  hosts: clients
+
+  tasks:
+    - name: Upgrade all packages
+      yum: name=* state=latest
+        
+    - name: Add repository
+      yum_repository:
+        name: epel
+        description: EPEL YUM repo
+        baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+        
+    - name: InstallDocker
+        action: ExecuteBash
+        inputs:
+          commands:
+           - sudo amazon-linux-extras install docker
+
+    - name: ec2userToDockerGroup
+        action: ExecuteBash
+        inputs:
+          commands:
+           - sudo usermod -a -G docker ec2-user
+           
+    - name: Enable Docker
+      service: name=docker enabled=yes state=started
+      
+      
+
+    - name: Install yum utils
+      yum:
+        name: yum-utils
+        state: latest
+           
+           sudo yum install docker
+         
+           sudo service docker start
+
+           
+           sudo usermod -a -G docker ec2-user
