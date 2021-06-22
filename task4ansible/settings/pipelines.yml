@@ -1,0 +1,4 @@
+- pipeline.id: test
+  pipeline.workers: 1
+  pipeline.batch.size: 1
+  config.string: "input { generator {} } filter { sleep { time => 1 } } output { stdout { codec => dots } }"
