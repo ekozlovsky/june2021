@@ -2,8 +2,6 @@ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 
 python3 get-pip.py --user
 
-
-
 python3 -m pip install --user ansible
 
 
@@ -17,18 +15,18 @@ ansible-playbook -i inventory -vvv -u ec2-user install-docker.yml
 
 
 
-#amazon guide how to install docker on amazon linux
-##https://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html
+# amazon guide how to install docker on amazon linux
+## https://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html
 
-#some git repo
-##https://gist.github.com/yonglai/d4617d6914d5f4eb22e4e5a15c0e9a03
+# some git repo
+## https://gist.github.com/yonglai/d4617d6914d5f4eb22e4e5a15c0e9a03
 
 
 # Install elasticsearcn
 
-##https://www.elastic.co/guide/en/elasticsearch/reference/7.13/docker.html
+## https://www.elastic.co/guide/en/elasticsearch/reference/7.13/docker.html
 
-##https://www.elastic.co/guide/en/kibana/current/docker.html
+## https://www.elastic.co/guide/en/kibana/current/docker.html
 
 
 docker rm es01-test 
