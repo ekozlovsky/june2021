@@ -1,0 +1,25 @@
+---
+- name: Installdocker
+  gather_facts: No
+  hosts: kibana
+
+  tasks:
+    - name: InstallEcho
+      shell: echo helloworld
+
+    - name: pullImage
+      docker_image:
+        name: httpd:2.4
+      become: yes
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+
+    - name: Enable container and start
+      docker_container:
+        name: hello-apache
+        image: httpd:2.4
+        state: started
+        ports:
+          - "80:80"
+      become: yes
+
