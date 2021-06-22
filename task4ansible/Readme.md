@@ -31,12 +31,14 @@ ansible-playbook -i inventory -vvv -u ec2-user install-docker.yml
 
 
 docker rm es01-test 
+
 docker run --name es01-test --net elastic -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.13.2
 
 
 docker run --rm -it --net elastic -v $(pwd)/pipeline/:/usr/share/logstash/pipeline/ docker.elastic.co/logstash/logstash:7.13.2
 
 docker run --rm -it --net elastic -v $(pwd)/settings/:/usr/share/logstash/config/ docker.elastic.co/logstash/logstash:7.13.2
+
 gedit ./settings/logstash.yml
 
 docker run --name kib01-test --net elastic -p 5601:5601 -e "ELASTICSEARCH_HOSTS=http://172.19.0.2:9200" docker.elastic.co/kibana/kibana:7.13.2
