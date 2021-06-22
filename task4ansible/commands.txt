@@ -14,3 +14,10 @@ sudo yum-config-manager --enable epel
 
 ansible clients  -m ping
 ansible-playbook -i inventory -vvv -u ec2-user install-docker.yml
+
+#amazon guide how to install docker on amazon linux
+https://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html
+
+#some git repo
+https://gist.github.com/yonglai/d4617d6914d5f4eb22e4e5a15c0e9a03
+
