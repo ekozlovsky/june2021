@@ -11,6 +11,7 @@ sudo yum-config-manager --enable epel
 
 
 ansible clients  -m ping
+
 ansible-playbook -i inventory -vvv -u ec2-user install-docker.yml
 
 
