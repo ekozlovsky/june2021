@@ -1,4 +1,4 @@
 #!/bin/sh
 
 echo $(date)
-docker ps -a
+# docker ps -a
