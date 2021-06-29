@@ -1,5 +1,7 @@
 node {
   stage('Builddd'){
     checkout scm
+    sh 'pwd'
+    sh 'cat Dockerfile'
   }
 }
