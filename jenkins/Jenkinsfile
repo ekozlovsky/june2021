@@ -1,7 +1,7 @@
 node {
   stage('Builddd'){
     checkout scm
-    sh 'cd jenkins'
+    sh 'cat jenkins/Jenkinsfile'
     sh 'pwd'
     sh 'cat jenkins/Dockerfile'
     sh 'docker ps'
