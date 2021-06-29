@@ -5,7 +5,7 @@ node {
     sh 'pwd'
     sh 'cat jenkins/Dockerfile'
     sh 'docker ps'
-    sh 'docket build . -t jenkinspipehttpd'
+    sh 'docker build . -t jnknspipehttpd'
     sh 'docker images'
   }
 }
