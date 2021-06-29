@@ -3,7 +3,7 @@ node {
     checkout scm
     sh 'cd jenkins'
     sh 'pwd'
-    sh 'cat Dockerfile'
+    sh 'cat jenkins/Dockerfile'
     sh 'docker ps'
   }
 }
