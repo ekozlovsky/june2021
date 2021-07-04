@@ -6,7 +6,8 @@
   tasks:
 
     - name: InstallDocker
-      shell: sudo amazon-linux-extras install -y docker
+      shell: sudo apt-get install docker-ce docker-ce-cli containerd.io
+#      shell: sudo amazon-linux-extras install -y docker
 
     - name: ec2userDockerGroup
       shell: sudo usermod -a -G docker ec2-user
