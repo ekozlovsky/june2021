@@ -27,7 +27,7 @@
     src: /home/ec2-user/june2021/mysql/setup_database_with_control.sql
     dest: database.sql
 
-- name: copy
+- name: setup database
   shell: mysql -h127.0.0.1 -uroot -p{{root_db_pass}} < database.sql
 
 - name: setup database
