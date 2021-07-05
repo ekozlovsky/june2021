@@ -1,4 +1,17 @@
 [clients]
 172.31.8.155
-#172.31.14.66
+172.31.14.66
+172.31.7.3
 
+[elastic]
+172.31.8.155
+
+[logstash]
+172.31.14.66
+
+[kibana]
+172.31.7.3
+
+
+[kibana:vars]
+ansible_python_interpreter=/usr/bin/python3
