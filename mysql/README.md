@@ -9,7 +9,7 @@ mysql -h172.17.0.2 -uroot -p
 mysql -h3.12.166.162 -uroot -p 
 ```
 
-### sql file with two tables to create database
+### sql file with two tables to create database and checking data input [setup_database_with_control.sql ](https://github.com/ekozlovsky/june2021/blob/main/mysql/setup_database_with_control.sql)
 ```
 setup_database_with_control.sql 
 ```
