@@ -1,0 +1,10 @@
+---
+- name: playing roles with ansible
+  gather_facts: No
+  hosts: kibana
+
+  roles:
+    - deploy_mysql
+
+
+
