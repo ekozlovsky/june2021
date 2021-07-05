@@ -6,16 +6,35 @@
 
 - name: pullImage
   docker_image:
-    name: httpd:2.4
+    name: mysql:5.7.34
   become: yes
   vars:
     ansible_python_interpreter: /usr/bin/python3
 
-- name: Enable docker and start
+- name: start mysql container
   docker_container:
-    name: hello-apache
-    image: httpd:2.4
+    name: hello-mysql
+    image: mysql:5.7.34
     state: started
+    env:
+        MYSQL_ROOT_PASSWORD={{ root_db_pass }}
     ports:
-      - "80:80"
+      - "3306:3306"
   become: yes
+
+- name: copy sql file
+  ansible.builtin.copy:
+    src: /home/ec2-user/june2021/mysql/setup_database_with_control.sql
+    dest: database.sql
+
+- name: setup database
+  shell: mysql -h127.0.0.1 -uroot -p{{root_db_pass}} < database.sql
+
+- name: setup database
+  mysql_db:
+    login_host: 127.0.0.1
+    login_user: root
+    login_password: "{{ root_db_pass }}"
+    state: import
+    name: all
+    target: database.sql
