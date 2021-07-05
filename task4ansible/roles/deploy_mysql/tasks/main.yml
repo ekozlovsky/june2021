@@ -6,16 +6,18 @@
 
 - name: pullImage
   docker_image:
-    name: httpd:2.4
+    name: mysql:5.7.34
   become: yes
   vars:
     ansible_python_interpreter: /usr/bin/python3
 
-- name: Enable docker and start
+- name: start mysql container
   docker_container:
-    name: hello-apache
-    image: httpd:2.4
+    name: hello-mysql
+    image: mysql:5.7.34
     state: started
+    env:
+        MYSQL_ROOT_PASSWORD={{ root_db_pass }}
     ports:
-      - "80:80"
+      - "3306:3306"
   become: yes
