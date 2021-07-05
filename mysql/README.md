@@ -23,13 +23,8 @@ select students.student_id, students.student_name, results.task1, results.task2,
 mysqldump -h3.12.166.162 -uroot -p --column-statistics=0 students > mysql/students_dump.sql
 ```
 
-### database dump
-```
-mysqldump -h3.12.166.162 -uroot -p --column-statistics=0 students > mysql/students_dump.sql
-```
-
 ### deploy mysql database database with ansible roles
-### please see playbooks in ../task4ansible/roles/deploy_mysql/tasks/main.yml
+#### please see playbooks in [../task4ansible/roles/deploy_mysql/tasks/main.yml](https://github.com/ekozlovsky/june2021/blob/main/task4ansible/roles/deploy_mysql/tasks/main.yml) 
 ```
 ansible-playbook -i inventory  -vvvv -u ec2-user start_roles.yml -e 'ansible_python_interpreter=/usr/bin/python3' -e 'root_db_pass=<pwd>'
 ```
