@@ -144,3 +144,5 @@ source june2021/mysql/setup_database_with_control.sql
 
 ansible-playbook -i inventory  -vvvv -u ec2-user start_roles.yml -e 'ansible_python_interpreter=/usr/bin/python3' -e 'root_db_pass=privet'
 
+mysqldump -h3.12.166.162 -uroot -p --column-statistics=0 students > mysql/students_dump.sql
+
