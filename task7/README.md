@@ -11,7 +11,7 @@ wget https://cdn.zabbix.com/zabbix/binaries/stable/5.2/5.2.7/zabbix_agent-5.2.7-
 ### start zabbix agent with docker
 ```
 docker run --name some-zabbix-agent -e ZBX_HOSTNAME="some-hostname" -e ZBX_SERVER_HOST="some-zabbix-server" -d zabbix/zabbix-agent:tag
-docker run --name some-zabbix-agent -e ZBX_HOSTNAME="localhost" -e ZBX_SERVER_HOST="134.17.145.166" -d zabbix/zabbix-agent:alpine
+docker run --name some-zabbix-agent -e ZBX_HOSTNAME="localhost" -e ZBX_SERVER_HOST="134.17.145.199" -d zabbix/zabbix-agent:alpine
 docker run --name some-zabbix-agent1 --rm  -p "10050:10050" -e ZBX_HOSTNAME="localhost" -e ZBX_SERVER_HOST="134.17.145.166" -d zabbix/zabbix-agent:alpine-latest
 ```
 
