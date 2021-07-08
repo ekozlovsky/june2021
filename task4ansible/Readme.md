@@ -44,3 +44,5 @@ gedit ./settings/logstash.yml
 docker run --name kib01-test --net elastic -p 5601:5601 -e "ELASTICSEARCH_HOSTS=http://172.19.0.2:9200" docker.elastic.co/kibana/kibana:7.13.2
 
 
+
+
