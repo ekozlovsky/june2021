@@ -136,4 +136,6 @@ docker run --rm -it --name logstash01 --net elastic -p 127.0.0.1:12201:12201/udp
 
 docker run --rm --name kib01-test --net elastic -p 5601:5601 -e "ELASTICSEARCH_HOSTS=http://172.19.0.2:9200" docker.elastic.co/kibana/kibana:7.13.2
 ```
-
+  output { elasticsearch { index => "TempLightLogs"} stdout{} }
+  
+config.string: "input { gelf { port => 12201 } } filter {  } output { elasticsearch { index => "TempLightLogs"} stdout{} }"
