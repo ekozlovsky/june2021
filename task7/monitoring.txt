@@ -79,6 +79,8 @@ docker run -d \
   docker.elastic.co/beats/filebeat:7.13.3 filebeat -e -strict.perms=false \
   -E output.elasticsearch.hosts=["elasticsearch:9200"]
 ```
+docker run -d --name=filebeat --user=root --volume="$(pwd)/settings/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro" --volume="/var/lib/docker/containers:/var/lib/docker/containers:ro" --volume="/var/run/docker.sock:/var/run/docker.sock:ro" docker.elastic.co/beats/filebeat:7.13.3 filebeat -e -strict.perms=false -E output.elasticsearch.hosts=["172.19.0.2:9200"]
+
 
 
 ```
@@ -129,13 +131,33 @@ output {
   if [type] == "docker" { elasticsearch { hosts => ["elasticsearch:9200"] } stdout { codec => rubydebug }
   }
 ```
+### elasticsearch
 ```
-docker run --rm --name es01-test --net elastic -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.13.2
+docker run --rm --name es01-test --net elastic --ip 172.19.0.2 -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.13.2
+```
 
+### logstash
 docker run --rm -it --name logstash01 --net elastic -p 127.0.0.1:12201:12201/udp --log-driver gelf --log-opt gelf-address=udp://localhost:12201  -v $(pwd)/settings/:/usr/share/logstash/config/ docker.elastic.co/logstash/logstash:7.13.2
 
-docker run --rm --name kib01-test --net elastic -p 5601:5601 -e "ELASTICSEARCH_HOSTS=http://172.19.0.2:9200" docker.elastic.co/kibana/kibana:7.13.2
+docker run --rm -it --name logstash01 --net elastic --ip 172.19.0.3 -v $(pwd)/settings/:/usr/share/logstash/config/ docker.elastic.co/logstash/logstash:7.13.2
+
 ```
+
+### kibana
+```
+docker run --rm --name kib01-test --net elastic --ip 172.19.0.4 -p 5601:5601 -e "ELASTICSEARCH_HOSTS=http://172.19.0.2:9200" docker.elastic.co/kibana/kibana:7.13.2
+```
+
+### filebeat 
+```
+docker run --rm -it --name=filebeat --user=root --net elastic --ip 172.19.0.5 -p 5044:5044 --volume="$(pwd)/settings/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro" --volume="/var/lib/docker/containers:/var/lib/docker/containers:ro" --volume="/var/run/docker.sock:/var/run/docker.sock:ro" docker.elastic.co/beats/filebeat:7.13.3 filebeat -e -strict.perms=false -E output.elasticsearch.hosts=["172.19.0.2:9200"]
+
+```
+
   output { elasticsearch { index => "TempLightLogs"} stdout{} }
   
 config.string: "input { gelf { port => 12201 } } filter {  } output { elasticsearch { index => "TempLightLogs"} stdout{} }"
+
+
+
+beats { port => 5044 host => "172.19.0.5" } 
