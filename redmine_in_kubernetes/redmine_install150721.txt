@@ -1,0 +1,122 @@
+
+ 1953  mkdir redmine
+ 1954  cd redmine
+ 1955  git status
+ 1956  git init
+ 1957  git clone https://github.com/redmine/redmine.git
+ 1958  ll
+ 1959  cd redmine/
+ 1960  ll
+ 1961  git status
+ 1962  ruby
+ 1963  sudo apt-get install ruby-full  <- 2.7.0 by default
+ 1964  ruby
+ 1965  ruby -v
+ 1966  gem
+ 1967  sudo apt-get remove ruby-full
+ 
+ https://github.com/rvm/ubuntu_rvm
+ 
+ 1968  sudo apt install rvm
+ 1969  sudo apt-get install software-properties-common
+ 1970  sudo apt-add-repository -y ppa:rael-gc/rvm
+ 1971  sudo apt-get update
+ 1972  sudo apt-get install rvm
+ 1973  rvm list
+ 1974  rvm -v
+ 1975  shutdown -r +1
+ 1976  rvm
+ 1977  rvm list
+ 1978  rvm install 
+ 1979  rvm list known
+ 1980  rvm install 2.7.2
+ 1981  gedit /usr/share/rvm/log/1626293006_ruby-2.7.2/update_system.log
+ 1982  sudo usermod -a -G rvm $USER
+ 1983  shutdown -r now
+ 1984  systemctl status mysql
+ 1985  apt-cache search libaio
+ 1986  cd ..
+ 1987  pwd
+ 1988  ll
+ 1989  cd Downloads/
+ 1990  ll
+ 1991  apt-cache search libaio
+ 1992  apt-cache search libnuma
+ 1993  sudo dpkg -i mysql-apt-config_0.8.17-1_all.deb 
+ 1994  sudo apt-get install mysql-server=5.7.7
+ 1995  sudo dpkg -i mysql-apt-config_0.8.17-1_all.deb 
+ 1996  sudo apt-get install mysql-server=5.7
+ 1997  sudo apt-get install mysql-server=5.7.34
+##Install mysql server 8
+ 
+ 1998  sudo apt-get install mysql-server
+ 1999  shutdown now
+ 2000  cd redmine/redmine/
+
+ 2002  bundle install
+ 2003  bundle 
+ 2004  which ruby
+ 2005  echo $PATH | grep ruby
+ 2006  find / -name bundle
+ 2007  find / -name bundle | grep bundle
+ ##Install bundler
+ 2008  sudo gem install bundler
+ 2009  bundle install
+ 2010  sudo bundle install
+ 2011  bundle install
+
+ 2014  gem install mysql2 -v '0.5.3'
+ 2015  sudo gem install mysql2 -v '0.5.3'
+ 2016  sudo bundle install
+ 2017  bundle install
+ 2018  sudo gem install mysql2 -v '0.5.3' --source 'https://rubygems.org/'
+ 
+ use 
+ 2019  cat /var/lib/gems/2.7.0/extensions/x86_64-linux/2.7.0/mysql2-0.5.3/mkmf.log
+ 2020  bundle install --without development test
+ 2021  sudo gem install mysql2 -v '0.5.3' --source 'https://rubygems.org/'
+ 2022  gedit /var/lib/gems/2.7.0/extensions/x86_64-linux/2.7.0/mysql2-0.5.3/mkmf.log
+ 2023  sudo gem install mysql2 
+ 2024  gedit /var/lib/gems/2.7.0/extensions/x86_64-linux/2.7.0/mysql2-0.5.3/gem_make.out
+ 2025  sudo gem install mysql2 -v '0.5.3' --source 'https://rubygems.org/'
+ 2026  bundle install --without development test
+ 2027  gcc
+ 2028  make
+ to solve mysql2 driver install range of utils seen from original Dockerfile (gcc problem?)
+ see script from github repository 
+ 
+ 2029  apt-get install -y --no-install-recommends freetds-dev gcc libmariadbclient-dev libpq-dev libsqlite3-dev make patch ; ;
+ 2030  apt-get install -y --no-install-recommends freetds-dev gcc libmariadbclient-dev libpq-dev libsqlite3-dev make patch 
+ 2031  sudo apt-get install -y --no-install-recommends freetds-dev gcc libmariadbclient-dev libpq-dev libsqlite3-dev make patch \
+ 2032  gcc
+ 2033  bundle install --without development test
+ 
+ Install mysql
+ 
+ create database redmine
+ 
+CREATE DATABASE redmine CHARACTER SET utf8mb4;
+CREATE USER 'redmine'@'localhost' IDENTIFIED WITH mysql_native_password BY 'my_password';
+GRANT ALL PRIVILEGES ON redmine.* TO 'redmine'@'localhost';
+ 
+ 
+ 2034  sudo mysql -uroot
+ 2035  sudo mysql -uredmine
+ 2036  mysql -uredmine -p
+ 
+ 2037  bundle exec rake generate_secret_token
+ 2038  RAILS_ENV=production bundle exec rake db:migrate
+ 2039  sudo
+ 2040  sudo su
+ 2041  RAILS_ENV=production bundle exec rake db:migrate --trace
+ 2042  sudo mysql -uroot
+ 2043  RAILS_ENV=production bundle exec rake db:migrate --trace
+ 2044  RAILS_ENV=production bundle exec rake redmine:load_default_data
+ 2045  bundle exec rails server webrick -e production (-u !!!!)
+ 2046  bundle exec rails server puma -e production
+ 2047  ls -la (checking permissions on folders)
+
+ 2050  bundle exec rails server webrick -e production
+ 2051  sudo bundle exec rails server webrick -e production
+ 2052  cd ..
+ 2053  history > history150721.txt

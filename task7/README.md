@@ -44,6 +44,10 @@ docker run --rm -it --name logstash01 --net elastic -p 127.0.0.1:12201:12201/udp
 
 ### logstash pipeline config string pipeline.yml
   config.string: "input { generator {} } filter { sleep { time => 1 } } output { stdout { codec => dots } }"
+  
+  -v $(pwd)/settings/:/usr/share/logstash/config/
+  -v $(pwd)/pipeline/:/usr/share/logstash/pipeline/
+  
 
 
 config.string: "input { gelf {} } filter { json { source => "message" } date { match => ["timestamp", "UNIX"] } mutate { remove_field => [ "command", "created" ] } }  output { elasticsearch { hosts => ["172.19.0.2"] } stdout { } }"
@@ -141,11 +145,13 @@ docker run --rm --name es01-test --net elastic --ip 172.19.0.2 -p 9200:9200 -p 9
 
 ### logstash
 ```
-docker run --rm -it --name logstash01 --net elastic -p 127.0.0.1:12201:12201/udp --log-driver gelf --log-opt gelf-address=udp://localhost:12201  -v $(pwd)/settings/:/usr/share/logstash/config/ docker.elastic.co/logstash/logstash:7.13.2
+docker run --rm -it --name logstash01 --net elastic --ip 172.19.0.3 -p 127.0.0.1:12201:12201/udp --log-driver gelf --log-opt gelf-address=udp://localhost:12201  -v $(pwd)/config/:/usr/share/logstash/config/ docker.elastic.co/logstash/logstash:7.13.2
 
 docker run --rm -it --name logstash01 --net elastic --ip 172.19.0.3 -v $(pwd)/settings/:/usr/share/logstash/config/ docker.elastic.co/logstash/logstash:7.13.2
 
 ```
+   grok { match => [   "message", "%{LOGLEVEL:loglevel} - %{NOTSPACE:taskid} - %{NOTSPACE:logger} - %{WORD:label}( - %{INT:duration:int})?"  ]  }
+
 
 ### kibana
 ```
