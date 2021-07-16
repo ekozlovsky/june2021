@@ -53,9 +53,7 @@ apt-cache search libnuma
    sudo gem install mysql2 -v '0.5.3'
    sudo bundle install
    bundle install
-   sudo gem install mysql2 -v '0.5.3' --source 'https://rubygems.org/'
- ```
-  
+   sudo gem install mysql2 -v '0.5.3' --source 'https://rubygems.org/ 
    cat /var/lib/gems/2.7.0/extensions/x86_64-linux/2.7.0/mysql2-0.5.3/mkmf.log
    
  2020  bundle install --without development test
@@ -77,12 +75,15 @@ apt-cache search libnuma
 
 ## build
 ```
+```
 bundle install --without development test
 ```
  
 ## Install mysql server 8
+```
    systemctl status mysql
    sudo apt-get install mysql-server
+```
 ## create database redmine
 ```
 CREATE DATABASE redmine CHARACTER SET utf8mb4;
@@ -90,7 +91,8 @@ CREATE USER 'redmine'@'localhost' IDENTIFIED WITH mysql_native_password BY 'my_p
 GRANT ALL PRIVILEGES ON redmine.* TO 'redmine'@'localhost';
 ```
  
-   sudo mysql -uroot
+```
+sudo mysql -uroot
    sudo mysql -uredmine
    mysql -uredmine -p
  
@@ -109,4 +111,5 @@ GRANT ALL PRIVILEGES ON redmine.* TO 'redmine'@'localhost';
 
    bundle exec rails server webrick -e production
    sudo bundle exec rails server webrick -e production
+```
 
