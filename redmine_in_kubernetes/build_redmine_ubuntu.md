@@ -1,38 +1,34 @@
+## Install instructions
+[Installation enstruction](https://www.redmine.org/projects/redmine/wiki/redmineinstall)
 ```
-   mkdir redmine
-   cd redmine
-   git status
-   git init
-   git clone https://github.com/redmine/redmine.git
-   ll
-   cd redmine/
-   ll
-   git status
-   ruby
-   sudo apt-get install ruby-full  <- 2.7.0 by default
-   ruby
-   ruby -v
-   gem
-   sudo apt-get remove ruby-full
+git status
+git init
+git clone https://github.com/redmine/redmine.git
+cd redmine
+ruby -v
+gem
 ```
 ## Install RVM 
 [RVM repo](https://github.com/rvm/ubuntu_rvm)
 ```
-   sudo apt-get install software-properties-common
-   sudo apt-add-repository -y ppa:rael-gc/rvm
-   sudo apt-get update
-   sudo apt-get install rvm
-   rvm list
-   rvm -v
-   rvm list known
+sudo apt-get install software-properties-common
+sudo apt-add-repository -y ppa:rael-gc/rvm
+sudo apt-get update
+sudo apt-get install rvm
+sudo usermod -a -G rvm $USER
+rvm list
+rvm -v
+rvm list known
 ```
 ## Install ruby 2.7.2
-   rvm install 2.7.2
-   sudo usermod -a -G rvm $USER
 ```
-   apt-cache search libaio
-   apt-cache search libaio
-   apt-cache search libnuma
+rvm install 2.7.2
+
+```
+```
+apt-cache search libaio
+apt-cache search libaio
+apt-cache search libnuma
 ```
 ## some attempts to install mysql 5.7.7
 ```
