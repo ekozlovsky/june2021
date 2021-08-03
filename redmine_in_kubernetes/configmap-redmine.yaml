@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-redmine
+data:
+  database.yml: |
+    production:
+      adapter: mysql2
+      database: redmine
+      host: redmine-mysql
+      username: redmine
+      password: admin
+      # Use "utf8" instead of "utfmb4" for MySQL prior to 5.7.7
+      encoding: utf8
+

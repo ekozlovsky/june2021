@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redmine
+  labels:
+    app: redmine
+spec:
+  ports:
+    - port: 3000
+      targetPort: 3000
+      protocol: TCP
+      name: redmine
+  externalIPs:
+    - 172.31.33.245
+  selector:
+    app: redmine
+    tier: frontend
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redmine
+  labels:
+    app: redmine
+spec:
+  selector:
+    matchLabels:
+      app: redmine
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: redmine
+        tier: frontend
+    spec:
+      containers:
+      - image: ivoitukh/redmine:8 # latest: wordpress:4.9-php7.2-apache ivoytukh/redmine:7
+        name: redmine
+        env:
+        - name: WORDPRESS_DB_HOST # redmine takes info about connection from database.yml
+          value: redmine-mysql # This one is from MySQL Service name
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        ports:
+        - containerPort: 80
+          name: redmine
+        volumeMounts:
+        - name: redmine-persistent-storage
+          mountPath: /var/www/html
+        volumeMounts:
+        - name: redmine-config
+          mountPath: /var/redmine/config/database.yml
+          subPath: database.yml
+      volumes:
+      - name: redmine-persistent-storage
+        persistentVolumeClaim:
+          claimName: local-pvc-redmine
+      - name: redmine-config
+        configMap:
+          name: configmap-redmine
+          items:
+            - key: database.yml
+              path: database.yml
+

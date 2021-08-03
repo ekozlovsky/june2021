@@ -15,7 +15,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   capacity:
-    storage: 5Gi
+    storage: 3Gi
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-sc-redmine-mysql
   local:
@@ -41,4 +41,4 @@ spec:
   storageClassName: local-sc-redmine-mysql
   resources:
     requests:
-      storage: 5Gi
+      storage: 3Gi
