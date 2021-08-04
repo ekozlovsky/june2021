@@ -1,8 +1,8 @@
-## Redmine web application with MySQL database 
-## Deployment in Kubernetes with Jenkins
+## Redmine web application with MySQL database in Kubernetes
+## Deployment Multi Tier web application Redmine in Kubernetes with Jenkins
 
 ### Redmine Installation instructions
-[See official instruction](https://www.redmine.org/projects/redmine/wiki/redmineinstall)
+[See official instructions](https://www.redmine.org/projects/redmine/wiki/redmineinstall)
 ```
 git status
 git init
@@ -26,16 +26,12 @@ rvm list known
 ### Install ruby 2.7.2
 ```
 rvm install 2.7.2
-
 ```
-
 ### Install bundler and rails
 ```
    sudo gem install bundler
-   
    gem install rails --version=5.2.6
 ```
-
 ### solving mysql2 driver installation problem
 ### to solve mysql2 driver install range of utils seen from original Dockerfile (gcc problem?). see script from redmine github repository 
 ```
@@ -44,23 +40,19 @@ rvm install 2.7.2
 ```
 
 ## build
-
 ```
 cd redmine
 bundle install --without development test
 
 ```
-
 ### Use this if you install mysql on the same host with redmine application
-
+### Create redmine database
 ```
 CREATE DATABASE redmine CHARACTER SET utf8mb4;
 CREATE USER 'redmine'@'localhost' IDENTIFIED WITH mysql_native_password BY 'my_password';
 GRANT ALL PRIVILEGES ON redmine.* TO 'redmine'@'localhost';
 ```
-
 ### Install kubernetes cluster on ubuntu
-
 ### Install docker
 ```
 sudo apt update
@@ -75,15 +67,12 @@ sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 sudo apt install kubeadm kubelet kubectl kubernetes-cni
 sudo swapoff -a
 ```
-
 ### What about kubelet on worker node?
 ```
 sudo systemctl enable kubelet
 sudo systemctl start kubelet
 ```
-
 ### Init cluster with right flannel network addresses
-
 ```
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 sudo kubeadm init
@@ -98,13 +87,15 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documen
 
 kubectl get pods --all-namespaces
 ```
-### worker nodes
+### Join worker nodes to the cluster
 
 ```
 kubeadm join 172.31.33.245:6443 --token atcazv.r92cspqceiguz5rx \
 	--discovery-token-ca-cert-hash sha256:bbb59bb2dd806b8a28b91cae7978b28285d5c098e04e638da2ffdf2f8dde75f5 
+	
+kubeadm token create --print-join-command
 ```
-### create storage classes, persistent volumes, persistent volume claims
+### Create storage class, persistent volume, persistent volume claim
 ```
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
