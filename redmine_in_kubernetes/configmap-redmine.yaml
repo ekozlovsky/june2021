@@ -9,7 +9,7 @@ data:
       database: redmine
       host: redmine-mysql
       username: redmine
-      password: admin
+      password: emptypassword
       # Use "utf8" instead of "utfmb4" for MySQL prior to 5.7.7
       encoding: utf8
 
