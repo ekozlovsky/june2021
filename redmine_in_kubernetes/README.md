@@ -104,5 +104,161 @@ kubectl get pods --all-namespaces
 kubeadm join 172.31.33.245:6443 --token atcazv.r92cspqceiguz5rx \
 	--discovery-token-ca-cert-hash sha256:bbb59bb2dd806b8a28b91cae7978b28285d5c098e04e638da2ffdf2f8dde75f5 
 ```
+### create storage classes, persistent volumes, persistent volume claims
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local-sc-redmine-mysql
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+```
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv-mysql
+  labels:
+    app: mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 3Gi
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-sc-redmine-mysql
+  local:
+    path: /mnt/redmine-mysql # create folder
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - ip-172-31-41-61
+```
 
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: local-pvc-redmine-mysql
+  labels:
+    app: mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-sc-redmine-mysql
+  resources:
+    requests:
+      storage: 3Gi
+```
+### create configMap
+
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-redmine
+data:
+  database.yml: |
+    production:
+      adapter: mysql2
+      database: redmine
+      host: redmine-mysql
+      username: redmine
+      password: admin
+      # Use "utf8" instead of "utfmb4" for MySQL prior to 5.7.7
+      encoding: utf8
+```
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-mysql-redmine
+data:
+  mysqld.cnf: |
+    [mysqld]
+    pid-file    = /var/run/mysqld/mysqld.pid
+    socket              = /var/run/mysqld/mysqld.sock
+    datadir             = /var/lib/mysql
+    #log-error  = /var/log/mysql/error.log
+    # By default we only accept connections from localhost
+    bind-address        = 0.0.0.0
+    # Disabling symbolic-links is recommended to prevent assorted security risks
+    symbolic-links=0
+```
+### Create deployment
+```
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: redmine-mysql
+  labels:
+    app: redmine
+spec:
+  selector:
+    matchLabels:
+      app: redmine
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: redmine
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql:5.7
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+          #        volumeMounts:
+        - name: mysql-config
+          mountPath: /etc/mysql/mysql.conf.d/mysqld.cnf
+          subPath: mysqld.cnf
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: local-pvc-redmine-mysql
+      - name: mysql-config
+        configMap:
+          name: configmap-mysql-redmine
+          items:
+            - key: mysqld.cnf
+              path: mysqld.cnf
+```
+### Create Services
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: redmine
+  labels:
+    app: redmine
+spec:
+  ports:
+    - port: 3000
+      targetPort: 3000
+      protocol: TCP
+      name: redmine
+  externalIPs:
+    - 172.31.33.245
+  selector:
+    app: redmine
+    tier: frontend
+  type: LoadBalancer
+```
 
