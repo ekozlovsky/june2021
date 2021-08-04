@@ -29,12 +29,11 @@ rvm install 2.7.2
 
 ```
 
-### Install bundler
+### Install bundler and rails
 ```
    sudo gem install bundler
-   bundle install
-   sudo bundle install
-   bundle install
+   
+   gem install rails --version=5.2.6
 ```
 
 ### solving mysql2 driver installation problem
@@ -49,6 +48,7 @@ rvm install 2.7.2
 ```
 cd redmine
 bundle install --without development test
+
 ```
 
 ### Use this if you install mysql on the same host with redmine application
@@ -57,6 +57,52 @@ bundle install --without development test
 CREATE DATABASE redmine CHARACTER SET utf8mb4;
 CREATE USER 'redmine'@'localhost' IDENTIFIED WITH mysql_native_password BY 'my_password';
 GRANT ALL PRIVILEGES ON redmine.* TO 'redmine'@'localhost';
+```
+
+### Install kubernetes cluster on ubuntu
+
+### Install docker
+```
+sudo apt update
+sudo apt install docker.io
+sudo systemctl status docker
+```
+### install kubernetes
+```
+sudo apt install apt-transport-https curl
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+sudo apt install kubeadm kubelet kubectl kubernetes-cni
+sudo swapoff -a
+```
+
+### What about kubelet on worker node?
+```
+sudo systemctl enable kubelet
+sudo systemctl start kubelet
+```
+
+### Init cluster with right flannel network addresses
+
+```
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+sudo kubeadm init
+```
+
+```
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml
+
+kubectl get pods --all-namespaces
+```
+### worker nodes
+
+```
+kubeadm join 172.31.33.245:6443 --token atcazv.r92cspqceiguz5rx \
+	--discovery-token-ca-cert-hash sha256:bbb59bb2dd806b8a28b91cae7978b28285d5c098e04e638da2ffdf2f8dde75f5 
 ```
 
 
