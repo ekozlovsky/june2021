@@ -37,10 +37,10 @@ spec:
         tier: frontend
     spec:
       containers:
-      - image: wordpress:4.8-apache # latest: wordpress:4.9-php7.2-apache ivoytukh/redmine:7
+      - image: ivoitukh/redmine:8 # latest: wordpress:4.9-php7.2-apache ivoytukh/redmine:7
         name: redmine
         env:
-        - name: WORDPRESS_DB_HOST # variables ??
+        - name: WORDPRESS_DB_HOST # redmine takes info about connection from database.yml
           value: redmine-mysql # This one is from MySQL Service name
         - name: WORDPRESS_DB_PASSWORD
           valueFrom:
@@ -49,12 +49,12 @@ spec:
               key: password
         ports:
         - containerPort: 80
-          name: wordpress
+          name: redmine
         volumeMounts:
-        - name: wordpress-persistent-storage
+        - name: redmine-persistent-storage
           mountPath: /var/www/html
       volumes:
-      - name: wordpress-persistent-storage
+      - name: redmine-persistent-storage
         persistentVolumeClaim:
-          claimName: mysql-pvc-local-wordpress
+          claimName: local-pvc-redmine
 

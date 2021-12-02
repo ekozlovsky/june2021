@@ -32,7 +32,7 @@ spec:
         tier: mysql
     spec:
       containers:
-      - image: mysql:5.6
+      - image: mysql:5.7
         name: mysql
         env:
         - name: MYSQL_ROOT_PASSWORD
@@ -49,5 +49,5 @@ spec:
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
-          claimName: local-pvc-redmine-sql
+          claimName: local-pvc-redmine-mysql
 
