@@ -252,4 +252,6 @@ spec:
     tier: frontend
   type: LoadBalancer
 ```
+### As this example is for learning purposes, the service is published in the internet on random 30k port.
+### But in production of course we need Ingress Controller to publish Service outside.
 
