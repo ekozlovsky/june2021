@@ -1,5 +1,0 @@
-- pipeline.id: test
-  pipeline.workers: 1
-  pipeline.batch.size: 1
-  config.string: "input { beats { port => 5044 }  } filter { sleep { time => 1 } } output { stdout{ codec => rubydebug } }"
-

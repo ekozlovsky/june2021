@@ -1,5 +1,0 @@
-- pipeline.id: test
-  pipeline.workers: 1
-  pipeline.batch.size: 1
-  config.string: "input {  gelf {}  } filter {     } output { stdout{ codec => rubydebug } }"
-
