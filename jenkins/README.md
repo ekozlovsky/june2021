@@ -100,7 +100,7 @@ docker run --group-add $(getent group docker | cut -d: -f3) -p 8080:8080 -p 5000
 
 cd /var/lib/docker/volumes/jenkins_home/
 
-
+```
 docker service create \
      --name secretsrv \
      --replicas 1 \
@@ -108,19 +108,18 @@ docker service create \
      --secret source=mysecret,target=mysql_root_password \
      --secret source=mysql_password,target=mysql_password \
      -e PASSWORD="/run/secrets/PASSWORD" \
-
      jnknspipehttpd:latest
-
+```
+```
 docker service create \
      --name secretsrv \
      --replicas 1 \
      -e PASSWORD="/run/secrets/PASSWORD" \
      -p 80
      jnknspipehttpd:latest
-
+```
+```
 docker service create --name secretsrv --secret source=PASSWORD,target=passw -e PASSWORD="/run/secrets/passw" --replicas 1 -p 80   jnknspipehttpd:latest sh -c "/usr/sbin/httpd -f /etc/apache2/httpd.conf -D FOREGROUND && PASSWORD=$(cat /run/secrets/passw)"
 
-
-
 echo "QWERTY!" | docker secret create PASSWORD -
-
+```
