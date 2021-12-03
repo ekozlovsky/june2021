@@ -1,9 +1,23 @@
 pipeline {
     agent any
+    
+    environment{
+        USER_NAME = "Joe"
+        USER_ID = 42 //string value
+    }
+    
     stages{
-        stage("List env vars"){
+        stage("List env Vars"){
             steps{
+                echo "--- Watching ENV Vars ---"
                 sh "printenv | sort"
+            }
+        }
+        stage("Using env Vars"){
+            steps{
+                echo "BUILD_NUMBER=${env.BUILD_NUMBER}" //groovy code, double quotes, groovy interpolation
+                sh 'echo BUILD_NUMBER = $BUILD_NUMBER'
+                echo "Current user is ${env.USER_NAME} with ID ${env.USER_ID}(type: ${env.USER_ID.class})"
             }
         }
     }
