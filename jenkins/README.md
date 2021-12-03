@@ -70,7 +70,7 @@ def someFunction(){
 }
 ```
 
-#### run agent
+#### run agent and control in one network
 ```
 docker run -d --rm --name=agent1 --network jenkins -p 23:22 -e "JENKINS_AGENT_SSH_PUBKEY=$(cat ~/.ssh/jenkins_agent_key.pub)" jenkins/ssh-agent:alpine
 ```
@@ -80,7 +80,6 @@ docker run -p 8080:8080 -p 50000:50000 --rm --name control1 --network jenkins -v
 ```
 mkdir .ssh
 touch .ssh/authorized_keys
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnZAsa84qTGb2aeHp7jLMnq2PpQP5ZrhHgp223eByriLDJMcb9cb2Vnnpvj8/71CZU6wfzTuch105A2WC8rKcmya5GRpaggflJCiDQaRjroecgu7W9QiL1T6YPSS0ycN/3xpd834gXKni7a6VXtooBAfHNPBaWuIQ24RbcYbTT5Li+nQT8yGLVg2f/rskLcVdIG0/lIwSoHe9z5mifcv/gPvZsEm+40quTMG2xEW/yQB2RDBfg54SgG1iKYS+UcCG/M67mosn3aP1JYFueUuyaOuqp0meYgON52jYgVxDZWgG8/uHkSZdcldmju3YrxtNOpANR20Hd013yUTn5JD8QYVkvN8EEBJfKmMSGWrxL5Q57MitSIMsVPPtcAQjBAOPI9bOef0+umbJlVUsDyncHw474NNFz1qrXzHy+mGPfuYt/BrYfrnv4N3pTX3UpZejufcmmwopCXRYrHWl67WfrP7yaCwSBXsFQHLdwFDhyGj3Z+B1i7GkzDIzA5Ua55LE= ya@ya-VirtualBox" > /home/jenkins/.ssh/authorized_keys
 
 
 chmod 644 .ssh/authorized_keys
@@ -88,13 +87,12 @@ chown  jenkins .ssh/authorized_keys
 ```
 /usr/local/openjdk-11/bin/java
 
-JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnZAsa84qTGb2aeHp7jLMnq2PpQP5ZrhHgp223eByriLDJMcb9cb2Vnnpvj8/71CZU6wfzTuch105A2WC8rKcmya5GRpaggflJCiDQaRjroecgu7W9QiL1T6YPSS0ycN/3xpd834gXKni7a6VXtooBAfHNPBaWuIQ24RbcYbTT5Li+nQT8yGLVg2f/rskLcVdIG0/lIwSoHe9z5mifcv/gPvZsEm+40quTMG2xEW/yQB2RDBfg54SgG1iKYS+UcCG/M67mosn3aP1JYFueUuyaOuqp0meYgON52jYgVxDZWgG8/uHkSZdcldmju3YrxtNOpANR20Hd013yUTn5JD8QYVkvN8EEBJfKmMSGWrxL5Q57MitSIMsVPPtcAQjBAOPI9bOef0+umbJlVUsDyncHw474NNFz1qrXzHy+mGPfuYt/BrYfrnv4N3pTX3UpZejufcmmwopCXRYrHWl67WfrP7yaCwSBXsFQHLdwFDhyGj3Z+B1i7GkzDIzA5Ua55LE= ya@ya-VirtualBox
-
-
+JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3Nz
 
 ```
-docker run -d --rm --name=agent1  jenkins/ssh-agent:jdk11 "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnZAsa84qTGb2aeHp7jLMnq2PpQP5ZrhHgp223eByriLDJMcb9cb2Vnnpvj8/71CZU6wfzTuch105A2WC8rKcmya5GRpaggflJCiDQaRjroecgu7W9QiL1T6YPSS0ycN/3xpd834gXKni7a6VXtooBAfHNPBaWuIQ24RbcYbTT5Li+nQT8yGLVg2f/rskLcVdIG0/lIwSoHe9z5mifcv/gPvZsEm+40quTMG2xEW/yQB2RDBfg54SgG1iKYS+UcCG/M67mosn3aP1JYFueUuyaOuqp0meYgON52jYgVxDZWgG8/uHkSZdcldmju3YrxtNOpANR20Hd013yUTn5JD8QYVkvN8EEBJfKmMSGWrxL5Q57MitSIMsVPPtcAQjBAOPI9bOef0+umbJlVUsDyncHw474NNFz1qrXzHy+mGPfuYt/BrYfrnv4N3pTX3UpZejufcmmwopCXRYrHWl67WfrP7yaCwSBXsFQHLdwFDhyGj3Z+B1i7GkzDIzA5Ua55LE= ya@ya-VirtualBox"
+docker run -d --rm --name=agent1  jenkins/ssh-agent:jdk11 "ssh-rsa AAAAB3NzaC1yc2EAAAA"
 ```
+#### getting access to local docker daemon to let issue docker ps
 ```
 docker run -p 8080:8080 -p 50000:50000 --rm --privileged --name control1 -v jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker jenkins/jenkins:lts-jdk11
 ```
