@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {
+                sh 'docker ps'
+                sh 'pwd'
+                sh 'whoami'
+                sh 'ip a'
+                sh 'echo $DATE'
+                sh 'ls -la'
+            }
+        }
+    }
+}
