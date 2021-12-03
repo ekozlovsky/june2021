@@ -14,11 +14,47 @@ pipeline {
             }
         }
         stage("Using env Vars"){
+            environment{
+                USER_PATH = "/home/joe"
+                USER_ID = 24
+            }
             steps{
                 echo "BUILD_NUMBER=${env.BUILD_NUMBER}" //groovy code, double quotes, groovy interpolation
                 sh 'echo BUILD_NUMBER = $BUILD_NUMBER'
                 echo "Current user is ${env.USER_NAME} with ID ${env.USER_ID}(type: ${env.USER_ID.class})"
+                echo "Current user path is ${env.USER_PATH}"
+                script{
+                    env.USER_GROUP = "users"
+                    env.RUN_NEXT = "true"
+                }
+                sh 'echo Current user group is $USER_GROUP'
+                withEnv(["USER_PWD=Secret", "USER_IS_ADMIN=false", "USER_NAME=Bob"]){
+                    sh 'echo Current user password is $USER_PWD'
+                    sh 'echo Is current user Admin? $USER_IS_ADMIN'
+                    echo "Current user is ${env.USER_NAME}" //use overriden var
+
+                    
+                }
             }
         }
+        stage("Using bolean vars"){
+            environment{
+                COUNT_FILES = sh(script:  "ls -la /tmp | tail -n +4 | wc -l", returnStdout: true).trim()
+                SOME_VALUE = "${someFunction() ?: ''}" //groovy string, unset var
+            }
+            when{
+                environment name: "RUN_NEXT", value: "true"
+                //expression{                    env.RUN_NEXT.toBoolean() == true                }
+            }
+            steps{
+                echo "Running stage triggered with boolean var"
+                echo "There are ${env.COUNT_FILES} files in /tmp"
+                echo "Some value is ${env.SOME_VALUE} of type ${env.SOME_VALUE?.class}"
+            }
+            
+        }
     }
+}
+def someFunction(){
+    return null
 }
