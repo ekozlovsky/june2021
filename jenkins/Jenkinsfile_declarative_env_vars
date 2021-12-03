@@ -31,9 +31,7 @@ pipeline {
                 withEnv(["USER_PWD=Secret", "USER_IS_ADMIN=false", "USER_NAME=Bob"]){
                     sh 'echo Current user password is $USER_PWD'
                     sh 'echo Is current user Admin? $USER_IS_ADMIN'
-                    echo "Current user is ${env.USER_NAME}" //use overriden var
-
-                    
+                    echo "Current user is ${env.USER_NAME}" //use overriden var                
                 }
             }
         }
